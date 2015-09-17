@@ -1,0 +1,21 @@
+FROM-SUBUSER-IMAGE ubuntu-x11
+ENV DEBIAN_FRONTEND noninteractive
+
+# # Ensure UTF-8 lang and locale
+RUN apt-get install locales && locale-gen en_US.UTF-8
+ENV LANG       en_US.UTF-8
+ENV LC_ALL     en_US.UTF-8
+
+ENV BROWSER_SCRIPT=/usr/bin/spotify
+ENV WRAPPER_SCRIPT=/usr/local/bin/spotwrapper.sh
+
+RUN \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 && \
+    echo "deb http://repository.spotify.com stable non-free" >> /etc/apt/sources.list.d/spotify.list && \
+    apt-get update && \
+    apt-get install -yq spotify-client pulseaudio
+
+RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT}
+RUN chmod 755 ${WRAPPER_SCRIPT}
+
+# vim: sw=4 ts=4 et ft=Dockerfile

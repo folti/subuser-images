@@ -1,0 +1,20 @@
+FROM-SUBUSER-IMAGE ubuntu-x11
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM linux
+# # Ensure UTF-8 lang and locale
+ENV LANG       en_US.UTF-8
+ENV LC_ALL     en_US.UTF-8
+
+ENV BROWSER_SCRIPT=/usr/bin/firefox
+ENV WRAPPER_SCRIPT=/usr/local/bin/firefoxwrapper.sh
+
+RUN \
+    sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get upgrade -y && apt-get install -yq firefox icedtea-7-plugin flashplugin-installer pulseaudio
+
+RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT}
+RUN chmod 755 ${WRAPPER_SCRIPT}
+
+# vim: sw=4 ts=4 et ft=Dockerfile

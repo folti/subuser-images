@@ -1,0 +1,11 @@
+{
+   "description": "A sercret squirrel web browser.",
+   "maintainer": "student",
+   "executable": "/usr/local/bin/torwrapper.sh",
+   "graphics-card" : true,
+   "sound-card" : true,
+   "gui": {"clipboard" : true, "system-tray": true},
+   "user-dirs": ["Downloads"],
+   "allow-network-access": true,
+   "basic-common-permissions": true
+}

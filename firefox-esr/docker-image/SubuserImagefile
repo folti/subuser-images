@@ -1,0 +1,30 @@
+FROM-SUBUSER-IMAGE ubuntu-x11
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM linux
+# # Ensure UTF-8 lang and locale
+ENV LANG       en_US.UTF-8
+ENV LC_ALL     en_US.UTF-8
+
+ENV ESR_VERSION=38.2.1esr
+ENV ESR_FILE=firefox-${ESR_VERSION}.tar.bz2
+ENV ESR_URL=https://download-installer.cdn.mozilla.net/pub/firefox/releases/${ESR_VERSION}/linux-x86_64/en-US/${ESR_FILE}
+ENV ESR_INSTALL=/usr/lib/firefox-esr
+ENV BROWSER_SCRIPT=${ESR_INSTALL}/firefox
+ENV WRAPPER_SCRIPT=/usr/local/bin/firefoxwrapper.sh
+
+RUN \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get install -yq icedtea-7-plugin flashplugin-installer pulseaudio bzip2 && \
+    apt-get install $(apt-cache depends firefox| grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ')
+
+RUN \
+    mkdir -p ${ESR_INSTALL} && \
+    wget -O /tmp/${ESR_FILE} ${ESR_URL} && \
+    tar -jvxf /tmp/${ESR_FILE} --strip=1 -C ${ESR_INSTALL} && \
+    rm -f /tmp/${ESR_FILE}
+
+RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT}
+RUN chmod 755 ${WRAPPER_SCRIPT}
+
+# vim: sw=4 ts=4 et ft=Dockerfile

@@ -1,0 +1,25 @@
+FROM ubuntu
+ENV DEBIAN_FRONTEND noninteractive
+
+# # Ensure UTF-8 lang and locale
+RUN apt-get install locales && locale-gen en_US.UTF-8
+ENV LANG       en_US.UTF-8
+ENV LC_ALL     en_US.UTF-8
+ENV TERM       linux
+RUN \
+    sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+    echo "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) multiverse" >> /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get -yq install \
+        dbus-x11 dmz-cursor-theme file libasound2 libatk1.0-0 libcairo2 \
+        libcanberra-gtk3-0 libcanberra-gtk3-module libcanberra-gtk-module \
+        libdbus-glib-1-2 libexif12 libfontconfig1 libfreetype6 libgcrypt11 \
+        libgdk-pixbuf2.0-0 libgl1-mesa-dri libgl1-mesa-glx libglib2.0-0 \
+        libgtk2.0-0 libpango-1.0-0 libpangocairo-1.0-0 libpangoxft-1.0-0 \
+        libstartup-notification0 libstdc++6 libx11-6 libxt6 pulseaudio \
+        x11-common x11-utils xz-utils
+
+COPY pulsewrapper.sh /usr/local/bin/pulsewrapper.sh
+
+# vim: sw=4 ts=4 et ft=Dockerfile

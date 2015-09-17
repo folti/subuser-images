@@ -1,0 +1,8 @@
+{"description":"Skype"
+,"maintainer":"student"
+,"executable":"/usr/local/bin/skypewrapper.sh"
+,"gui":{"clipboard":true,"system-tray":true}
+,"sound-card":true
+,"allow-network-access":true
+,"basic-common-permissions":true
+}

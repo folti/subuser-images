@@ -1,0 +1,15 @@
+{
+   "allow-network-access" : true,
+   "maintainer" : "student",
+   "sound-card" : true,
+   "graphics-card" : true,
+   "description" : "A popular web browser.",
+   "gui" : {
+      "clipboard" : true
+   },
+   "user-dirs" : [
+      "Downloads"
+   ],
+   "executable" : "/usr/local/bin/firefoxwrapper.sh",
+   "basic-common-permissions" : true
+}
