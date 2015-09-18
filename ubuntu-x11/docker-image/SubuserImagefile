@@ -18,7 +18,7 @@ RUN \
         libgdk-pixbuf2.0-0 libgl1-mesa-dri libgl1-mesa-glx libglib2.0-0 \
         libgtk2.0-0 libpango-1.0-0 libpangocairo-1.0-0 libpangoxft-1.0-0 \
         libstartup-notification0 libstdc++6 libx11-6 libxt6 pulseaudio \
-        x11-common x11-utils xz-utils
+        x11-common x11-utils xz-utils apt-transport-https
 
 COPY pulsewrapper.sh /usr/local/bin/pulsewrapper.sh
 
