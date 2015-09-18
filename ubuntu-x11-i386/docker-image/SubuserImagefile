@@ -1,0 +1,20 @@
+FROM-SUBUSER-IMAGE ubuntu-x11
+ENV DEBIAN_FRONTEND noninteractive
+
+# # Ensure UTF-8 lang and locale
+ENV LANG       en_US.UTF-8
+ENV LC_ALL     en_US.UTF-8
+ENV TERM       linux
+RUN \
+    dpkg --add-architecture i386 && \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get -yq install \
+        dbus-x11:386 libasound2:386 libatk1.0-0:386 libcairo2:386 \
+        libdbus-glib-1-2:386 libexif12:386 libfontconfig1:386 libfreetype6:386 \
+        libgcrypt11:386 libgdk-pixbuf2.0-0:386 libgl1-mesa-dri:386 \
+        libgl1-mesa-glx:386 libglib2.0-0:386 libgtk2.0-0:386 libpango-1.0-0:386 \
+        libpangocairo-1.0-0:386 libpangoxft-1.0-0:386 libstdc++6:386 \
+        libx11-6:386 libxt6:386 pulseaudio:386 x11-common:386 x11-utils:386
+
+# vim: sw=4 ts=4 et ft=Dockerfile
