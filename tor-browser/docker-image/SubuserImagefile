@@ -16,7 +16,7 @@ RUN \
     update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -yq pulseaudio wget flashplugin-installer && \
+    apt-get install -yq pulseaudio wget flashplugin-installer icedtea-7-plugin && \
     apt-get install $(apt-cache depends firefox| grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ')
 
 RUN \
