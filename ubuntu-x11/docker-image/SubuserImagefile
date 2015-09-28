@@ -21,5 +21,6 @@ RUN \
         x11-common x11-utils xz-utils apt-transport-https
 
 COPY pulsewrapper.sh /usr/local/bin/pulsewrapper.sh
+ADD check-for-updates /subuser/check-for-updates
 
 # vim: sw=4 ts=4 et ft=Dockerfile

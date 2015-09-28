@@ -22,5 +22,6 @@ RUN wget https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb 
 
 RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT}
 RUN chmod 755 ${WRAPPER_SCRIPT}
+ADD check-for-updates /subuser/check-for-updates
 
 # vim: sw=4 ts=4 et ft=Dockerfile
