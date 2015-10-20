@@ -4,7 +4,6 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV SKYPE_FILE=skype-ubuntu-precise_4.3.0.37-1_i386.deb
 ENV SKYPE_URL=http://download.skype.com/linux/${SKYPE_FILE}
 # # Ensure UTF-8 lang and locale
-RUN apt-get install locales && locale-gen en_US.UTF-8
 ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
 ENV BROWSER_SCRIPT=/usr/bin/skype
@@ -16,10 +15,9 @@ RUN \
     wget ${SKYPE_URL} -O /usr/src/${SKYPE_FILE} && \
     dpkg -i /usr/src/${SKYPE_FILE} || true && \
     apt-get install -fy && \
-    rm -f /usr/src/${SKYPE_FILE}
-
-RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT}
-RUN chmod 755 ${WRAPPER_SCRIPT}
-ADD check-for-updates /subuser/check-for-updates
+    rm -f /usr/src/${SKYPE_FILE} &&
+    apt-get clean && \
+    echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT} && \
+    chmod 755 ${WRAPPER_SCRIPT}
 
 # vim: sw=4 ts=4 et ft=Dockerfile

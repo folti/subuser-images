@@ -1,4 +1,4 @@
-FROM-SUBUSER-IMAGE firefox-base
+FROM-SUBUSER-IMAGE ubuntu-x11
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 # # Ensure UTF-8 lang and locale
@@ -9,12 +9,13 @@ ENV BROWSER_SCRIPT=/usr/bin/firefox
 ENV WRAPPER_SCRIPT=/usr/local/bin/firefoxwrapper.sh
 
 RUN \
+    update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX && \
     apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get upgrade -y && \
-    apt-get install -yq firefox && \
-    apt-get clean && \
-    echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT} && \
-    chmod 755 ${WRAPPER_SCRIPT}
+    apt-get install -yq icedtea-7-plugin flashplugin-installer pulseaudio wget && \
+    apt-get install -yq $(apt-cache depends firefox| grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ') && \
+    apt-get clean
+
 
 # vim: sw=4 ts=4 et ft=Dockerfile

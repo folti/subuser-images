@@ -1,4 +1,4 @@
-FROM-SUBUSER-IMAGE ubuntu-x11
+FROM-SUBUSER-IMAGE firefox-base
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
@@ -13,19 +13,11 @@ ENV BROWSER_SCRIPT=${TOR_BROWSER_INSTALL}/Browser/start-tor-browser
 ENV WRAPPER_SCRIPT=/usr/local/bin/torwrapper.sh
 
 RUN \
-    update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX && \
-    apt-get update && \
-    apt-get dist-upgrade -y && \
-    apt-get install -yq pulseaudio wget flashplugin-installer icedtea-7-plugin && \
-    apt-get install $(apt-cache depends firefox| grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ')
-
-RUN \
     mkdir -p ${TOR_BROWSER_INSTALL} && \
     wget -O /tmp/${TOR_BROWSER_FILE} ${TOR_BROWSER_URL} && \
     tar -Jvxf /tmp/${TOR_BROWSER_FILE} --strip=1 -C ${TOR_BROWSER_INSTALL} && \
-    rm -rf /tmp/${TOR_BROWSER_FILE}
-
-RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT}
-RUN chmod 0755 ${WRAPPER_SCRIPT}
+    rm -rf /tmp/${TOR_BROWSER_FILE} && \
+    echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT} && \
+    chmod 0755 ${WRAPPER_SCRIPT}
 
 # vim: sw=4 ts=4 et ft=Dockerfile

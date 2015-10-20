@@ -3,7 +3,7 @@
    "maintainer" : "student",
    "sound-card" : true,
    "graphics-card" : true,
-   "description" : "A popular web browser.",
+   "description" : "A popular web browser. With Java and Flash, for heightened insecurity.",
    "gui" : {
       "clipboard" : true
    },

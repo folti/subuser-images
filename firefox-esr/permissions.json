@@ -3,7 +3,7 @@
    "maintainer" : "student",
    "sound-card" : true,
    "graphics-card" : true,
-   "description" : "A popular web browser. Extended Support Release",
+   "description" : "A popular web browser. Extended Support Release. With Java nad Flash.",
    "gui" : {
       "clipboard" : true
    },
