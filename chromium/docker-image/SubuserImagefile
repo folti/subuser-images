@@ -8,6 +8,8 @@ ENV LC_ALL     en_US.UTF-8
 
 ENV BROWSER_SCRIPT=/usr/bin/chromium-browser
 ENV WRAPPER_SCRIPT=/usr/local/bin/chromewrapper.sh
+ENV GTALKPLUGIN_URL=https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb
+ENV GTALKPLUGIN_FILE=/tmp/google-talkplugin_current_amd64.deb
 
 RUN \
     apt-get update && \
@@ -15,13 +17,13 @@ RUN \
     apt-get install -yq chromium-browser pepperflashplugin-nonfree pulseaudio libv4l-0
 
 # install google talk plugin
-RUN wget https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb \
-        -O /tmp/google-talkplugin_current_amd64.deb && \
-    dpkg -i /tmp/google-talkplugin_current_amd64.deb || true && \
-    apt-get install -fy
+RUN wget ${GTALKPLUGIN_URL} -O ${GTALKPLUGIN_FILE} && \
+    dpkg -i ${GTALKPLUGIN_FILE} || true && \
+    apt-get install -fy && \
+    apt-get clean && \
+    rm -f ${GTALKPLUGIN_FILE}
 
-RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT}
-RUN chmod 755 ${WRAPPER_SCRIPT}
-ADD check-for-updates /subuser/check-for-updates
+RUN echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT} && \
+    chmod 755 ${WRAPPER_SCRIPT}
 
 # vim: sw=4 ts=4 et ft=Dockerfile
