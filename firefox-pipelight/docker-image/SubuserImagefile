@@ -1,0 +1,28 @@
+FROM-SUBUSER-IMAGE firefox-base
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM linux
+# # Ensure UTF-8 lang and locale
+ENV LANG       en_US.UTF-8
+ENV LC_ALL     en_US.UTF-8
+
+ENV BROWSER_SCRIPT=/usr/bin/firefox
+ENV WRAPPER_SCRIPT=/usr/local/bin/firefoxwrapper.sh
+
+RUN \
+    apt-get remove flashplugin-installer && \
+    dpkg --add-architecture i386 && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:pipelight/stable && \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get upgrade -y && \
+    apt-get install -yq firefox && \
+    apt-get install --install-recommends -y pipelight-multi && \
+    apt-get clean && \
+    pipelight-plugin --update && \
+    pipelight-plugin --accept --enable silverlight && \
+    pipelight-plugin --accept --enable flash && \
+    echo '#!/bin/sh\npipelight-plugin --accept --enable silverlight\npipelight-plugin --accept --enable flash\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT} && \
+    chmod 755 ${WRAPPER_SCRIPT}
+
+# vim: sw=4 ts=4 et ft=Dockerfile
