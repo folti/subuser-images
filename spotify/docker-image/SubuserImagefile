@@ -12,7 +12,7 @@ RUN \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 && \
     echo "deb http://repository.spotify.com stable non-free" >> /etc/apt/sources.list.d/spotify.list && \
     apt-get update && \
-    apt-get install -yq spotify-client pulseaudio && \
+    apt-get install -yq --install-recommends xdg-utils spotify-client pulseaudio && \
     apt-get clean && \
     echo '#!/bin/sh\n/usr/local/bin/pulsewrapper.sh '${BROWSER_SCRIPT}' $@' > ${WRAPPER_SCRIPT} && \
     chmod 755 ${WRAPPER_SCRIPT}
