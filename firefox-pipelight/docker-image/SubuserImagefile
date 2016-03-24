@@ -9,7 +9,7 @@ ENV BROWSER_SCRIPT=/usr/bin/firefox
 ENV WRAPPER_SCRIPT=/usr/local/bin/firefoxwrapper.sh
 
 RUN \
-    apt-get remove flashplugin-installer && \
+    apt-get remove -y flashplugin-installer && \
     dpkg --add-architecture i386 && \
     apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:pipelight/stable && \
