@@ -11,13 +11,18 @@ ENV WRAPPER_SCRIPT=/usr/local/bin/chromewrapper.sh
 ENV GTALKPLUGIN_URL=https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb
 ENV GTALKPLUGIN_FILE=/tmp/google-talkplugin_current_amd64.deb
 
+ADD gglkeys.txt /subuser/gglkeys.txt
+
 RUN \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -yq chromium-browser pepperflashplugin-nonfree pulseaudio libv4l-0
-
-# install google talk plugin
-RUN wget ${GTALKPLUGIN_URL} -O ${GTALKPLUGIN_FILE} && \
+    apt-get install -yq wget && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551 && \
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    apt-get install -yq chromium-browser pepperflashplugin-nonfree pulseaudio libv4l-0 && \
+    cp /subuser/gglkeys.txt /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt && \
+    update-pepperflashplugin-nonfree --install && \
+    wget ${GTALKPLUGIN_URL} -O ${GTALKPLUGIN_FILE} && \
     dpkg -i ${GTALKPLUGIN_FILE} || true && \
     apt-get install -fy && \
     apt-get clean && \
