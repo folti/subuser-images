@@ -13,7 +13,7 @@ RUN \
     apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get upgrade -y && \
-    apt-get install -yq icedtea-7-plugin flashplugin-installer pulseaudio wget && \
+    apt-get install -yq icedtea-8-plugin flashplugin-installer pulseaudio wget && \
     apt-get install -yq $(apt-cache depends firefox| grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ') && \
     apt-get clean
 
