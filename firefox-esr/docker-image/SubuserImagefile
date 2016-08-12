@@ -5,7 +5,7 @@ ENV TERM linux
 ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
 
-ENV ESR_VERSION=38.2.1esr
+ENV ESR_VERSION=38.8.0esr
 ENV ESR_FILE=firefox-${ESR_VERSION}.tar.bz2
 ENV ESR_URL=https://download-installer.cdn.mozilla.net/pub/firefox/releases/${ESR_VERSION}/linux-x86_64/en-US/${ESR_FILE}
 ENV ESR_INSTALL=/usr/lib/firefox-esr
