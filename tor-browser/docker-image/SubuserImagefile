@@ -5,7 +5,7 @@ ENV TERM linux
 # # Ensure UTF-8 lang and locale
 ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
-ENV TOR_BROWSER_VERSION=6.0.3
+ENV TOR_BROWSER_VERSION=6.0.4
 ENV TOR_BROWSER_FILE=tor-browser-linux64-${TOR_BROWSER_VERSION}_en-US.tar.xz
 ENV TOR_BROWSER_URL=https://www.torproject.org/dist/torbrowser/${TOR_BROWSER_VERSION}/${TOR_BROWSER_FILE}
 ENV TOR_BROWSER_INSTALL=/usr/lib/tor-browser
